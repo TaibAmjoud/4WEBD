@@ -1,0 +1,163 @@
+openapi: 3.0.0
+info:
+  title: API des événements
+  version: 1.0.0
+paths:
+  /api/events:
+    post:
+      summary: Créer un nouvel événement
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  description: Titre de l'événement
+                description:
+                  type: string
+                  description: Description de l'événement
+                date:
+                  type: string
+                  format: date
+                  description: Date de l'événement (format ISO 8601)
+                address:
+                  type: string
+                  description: Adresse de l'événement
+              required:
+                - title
+                - description
+                - date
+                - address
+      responses:
+        '201':
+          description: Événement créé avec succès
+        '500':
+          description: Erreur interne du serveur
+    get:
+      summary: Récupérer tous les événements
+      responses:
+        '200':
+          description: Liste de tous les événements
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    _id:
+                      type: string
+                      description: ID de l'événement
+                    title:
+                      type: string
+                      description: Titre de l'événement
+                    description:
+                      type: string
+                      description: Description de l'événement
+                    date:
+                      type: string
+                      format: date
+                      description: Date de l'événement (format ISO 8601)
+                    address:
+                      type: string
+                      description: Adresse de l'événement
+        '500':
+          description: Erreur interne du serveur
+  /api/events/{id}:
+    get:
+      summary: Récupérer un événement par son ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID de l'événement à récupérer
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Détails de l'événement récupéré
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  _id:
+                    type: string
+                    description: ID de l'événement
+                  title:
+                    type: string
+                    description: Titre de l'événement
+                  description:
+                    type: string
+                    description: Description de l'événement
+                  date:
+                    type: string
+                    format: date
+                    description: Date de l'événement (format ISO 8601)
+                  address:
+                    type: string
+                    description: Adresse de l'événement
+        '404':
+          description: Événement non trouvé
+        '500':
+          description: Erreur interne du serveur
+    put:
+      summary: Mettre à jour un événement par son ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID de l'événement à mettre à jour
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  description: Nouveau titre de l'événement
+                description:
+                  type: string
+                  description: Nouvelle description de l'événement
+                date:
+                  type: string
+                  format: date
+                  description: Nouvelle date de l'événement (format ISO 8601)
+                address:
+                  type: string
+                  description: Nouvelle adresse de l'événement
+              required:
+                - title
+                - description
+                - date
+                - address
+      responses:
+        '200':
+          description: Événement mis à jour avec succès
+        '404':
+          description: Événement non trouvé
+        '500':
+          description: Erreur interne du serveur
+    delete:
+      summary: Supprimer un événement par son ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID de l'événement à supprimer
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Événement supprimé avec succès
+        '404':
+          description: Événement non trouvé
+        '500':
+          description: Erreur interne du serveur

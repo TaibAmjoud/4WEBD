@@ -1,0 +1,215 @@
+openapi: 3.0.0
+info:
+  title: Documentation de l'API
+  version: 1.0.0
+paths:
+  /user/register:
+    post:
+      summary: Inscription d'un nouvel utilisateur
+      description: Permet à un nouvel utilisateur de s'inscrire dans le système.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                firstName:
+                  type: string
+                lastName:
+                  type: string
+                email:
+                  type: string
+                password:
+                  type: string
+              required:
+                - firstName
+                - lastName
+                - email
+                - password
+      responses:
+        '201':
+          description: Utilisateur inscrit avec succès.
+        '500':
+          description: Erreur interne du serveur.
+  /user:
+    get:
+      summary: Récupérer tous les utilisateurs
+      description: Récupère la liste de tous les utilisateurs enregistrés dans le système.
+      responses:
+        '200':
+          description: Succès de la récupération des utilisateurs.
+        '500':
+          description: Erreur interne du serveur.
+  /user/{id}:
+    get:
+      summary: Récupérer un utilisateur par son ID
+      description: Récupère les informations d'un utilisateur spécifique en fonction de son ID.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID de l'utilisateur à récupérer.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Succès de la récupération de l'utilisateur.
+        '404':
+          description: Utilisateur non trouvé.
+        '500':
+          description: Erreur interne du serveur.
+    put:
+      summary: Mettre à jour un utilisateur par son ID
+      description: Met à jour les informations d'un utilisateur spécifique en fonction de son ID.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID de l'utilisateur à mettre à jour.
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                firstName:
+                  type: string
+                lastName:
+                  type: string
+                email:
+                  type: string
+              required:
+                - firstName
+                - lastName
+                - email
+      responses:
+        '200':
+          description: Utilisateur mis à jour avec succès.
+        '404':
+          description: Utilisateur non trouvé.
+        '500':
+          description: Erreur interne du serveur.
+    delete:
+      summary: Supprimer un utilisateur par son ID
+      description: Supprime un utilisateur spécifique en fonction de son ID.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID de l'utilisateur à supprimer.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Utilisateur supprimé avec succès.
+        '404':
+          description: Utilisateur non trouvé.
+        '500':
+          description: Erreur interne du serveur.
+  /user/login:
+    post:
+      summary: Authentifier un utilisateur
+      description: Authentifie un utilisateur avec son adresse e-mail et son mot de passe.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+              required:
+                - email
+                - password
+      responses:
+        '200':
+          description: Authentification réussie.
+        '401':
+          description: Mot de passe incorrect.
+        '404':
+          description: Utilisateur non trouvé.
+        '500':
+          description: Erreur interne du serveur.
+  /user/logout:
+    post:
+      summary: Déconnecter un utilisateur
+      description: Révoque le jeton d'authentification de l'utilisateur connecté.
+      responses:
+        '200':
+          description: Déconnexion réussie.
+        '500':
+          description: Erreur interne du serveur.
+  /user/profile:
+    get:
+      summary: Récupérer les détails de l'utilisateur connecté
+      description: Récupère les informations de l'utilisateur actuellement connecté.
+      responses:
+        '200':
+          description: Succès de la récupération des informations de l'utilisateur.
+        '404':
+          description: Utilisateur non trouvé.
+        '500':
+          description: Erreur interne du serveur.
+  /user/profile/update-password:
+    put:
+      summary: Mettre à jour le mot de passe de l'utilisateur connecté
+      description: Met à jour le mot de passe de l'utilisateur actuellement connecté.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                newPassword:
+                  type: string
+              required:
+                - newPassword
+      responses:
+        '200':
+          description: Mot de passe mis à jour avec succès.
+        '500':
+          description: Erreur interne du serveur.
+  /user/profile/update-info:
+    put:
+      summary: Mettre à jour les informations de l'utilisateur connecté
+      description: Met à jour les informations de l'utilisateur actuellement connecté.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                email:
+                  type: string
+              required:
+                - username
+                - email
+      responses:
+        '200':
+          description: Informations de l'utilisateur mises à jour avec succès.
+        '500':
+          description: Erreur interne du serveur.
+  /user/admin:
+    get:
+      summary: Accéder à la route admin
+      description: Accède à une route réservée aux administrateurs.
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Accès autorisé à la route admin.
+        '403':
+          description: Autorisations insuffisantes.
+        '500':
+          description: Erreur interne du serveur.

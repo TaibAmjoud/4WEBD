@@ -1,0 +1,145 @@
+openapi: 3.0.0
+info:
+  title: API des tickets
+  version: 1.0.0
+paths:
+  /api/tickets:
+    post:
+      summary: Créer un nouveau ticket
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  description: Titre du ticket
+                description:
+                  type: string
+                  description: Description du ticket
+                price:
+                  type: number
+                  description: Prix du ticket
+              required:
+                - title
+                - description
+                - price
+      responses:
+        '201':
+          description: Ticket créé avec succès
+        '500':
+          description: Erreur interne du serveur
+    get:
+      summary: Récupérer tous les tickets
+      responses:
+        '200':
+          description: Liste de tous les tickets
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    _id:
+                      type: string
+                      description: ID du ticket
+                    title:
+                      type: string
+                      description: Titre du ticket
+                    description:
+                      type: string
+                      description: Description du ticket
+                    price:
+                      type: number
+                      description: Prix du ticket
+        '500':
+          description: Erreur interne du serveur
+  /api/tickets/{id}:
+    get:
+      summary: Récupérer un ticket par son ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID du ticket à récupérer
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Détails du ticket récupéré
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  _id:
+                    type: string
+                    description: ID du ticket
+                  title:
+                    type: string
+                    description: Titre du ticket
+                  description:
+                    type: string
+                    description: Description du ticket
+                  price:
+                    type: number
+                    description: Prix du ticket
+        '404':
+          description: Ticket non trouvé
+        '500':
+          description: Erreur interne du serveur
+    put:
+      summary: Mettre à jour un ticket par son ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID du ticket à mettre à jour
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  description: Nouveau titre du ticket
+                description:
+                  type: string
+                  description: Nouvelle description du ticket
+                price:
+                  type: number
+                  description: Nouveau prix du ticket
+              required:
+                - title
+                - description
+                - price
+      responses:
+        '200':
+          description: Ticket mis à jour avec succès
+        '404':
+          description: Ticket non trouvé
+        '500':
+          description: Erreur interne du serveur
+    delete:
+      summary: Supprimer un ticket par son ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID du ticket à supprimer
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Ticket supprimé avec succès
+        '404':
+          description: Ticket non trouvé
+        '500':
+          description: Erreur interne du serveur
