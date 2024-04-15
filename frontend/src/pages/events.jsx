@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-// import axios from 'axios';
+import axios from 'axios';
 import { EventContext } from "../context/event-context";
 
 export const Events = (props) => {
@@ -7,16 +7,16 @@ export const Events = (props) => {
   const { id, eventName, description, localisation, price, eventImage, maxTickets } = props.data;
   const { addToCart, cartItems } = useContext(EventContext);
 
-  // useEffect(() => {
-  //   // Fetch event details from the API
-  //   axios.get(`https://your-api.com/events/${id}`)
-  //     .then(response => {
-  //       setEventDetails(response.data); // Update state with event details
-  //     })
-  //     .catch(error => {
-  //       console.error('Error fetching event details:', error);
-  //     });
-  // }, [id]); // Execute this effect only once during component mount
+   useEffect(() => {
+    // Fetch event details from the API
+    axios.get(`http://localhost:4000/api/events/${id}`)
+      .then(response => {
+        setEventDetails(response.data); // Update state with event details
+      })
+      .catch(error => {
+        console.error('Error fetching event details:', error);
+      });
+  }, [id]); // Execute this effect only once during component mount
 
   const cartItemCount = cartItems[id];
 
