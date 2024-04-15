@@ -20,8 +20,9 @@ const userSchema = new mongoose.Schema({
         enum: ['Admin', 'EventCreator', 'User'], // Les rôles disponibles
         default: 'User' // Par défaut, un utilisateur est un simple utilisateur
     },
-    tickets: [{
-        type: String // Peut-être que chaque ticket est juste un numéro, on peut stocker l'ID du ticket si on a un modèle de données pour les tickets
+    tickets: [{ 
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'Ticket' 
     }]
 });
 
