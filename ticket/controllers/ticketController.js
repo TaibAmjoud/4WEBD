@@ -1,10 +1,9 @@
-const Ticket = require('../models/Ticket');
+const Ticket = require('../models/ticket');
 
 // Créer un nouveau ticket
 const createTicket = async (req, res) => {
     try {
-        const { event, price, seatNumber } = req.body;
-        const newTicket = new Ticket({ event, price, seatNumber });
+        const newTicket = new Ticket(req.body);
         await newTicket.save();
         res.status(201).json(newTicket);
     } catch (error) {
@@ -66,10 +65,30 @@ const deleteTicketById = async (req, res) => {
     }
 };
 
+// Rechercher l'utilisateur associé à un ticket par son numéro de ticket
+const getUserByTicketNumber = async (req, res) => {
+    try {
+        const { ticketNumber } = req.params;
+        const ticket = await Ticket.findOne({ uuid: ticketNumber });
+        if (!ticket) {
+            return res.status(404).json({ message: 'Ticket not found' });
+        }
+        const user = await User.findById(ticket.userId);
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+        res.status(200).json(user);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Internal Server Error' });
+    }
+};
+
 module.exports = {
     createTicket,
     getAllTickets,
     getTicketById,
     updateTicketById,
-    deleteTicketById
+    deleteTicketById,
+    getUserByTicketNumber
 };

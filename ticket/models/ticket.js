@@ -3,21 +3,31 @@ const Joi = require('joi');
 const Schema = mongoose.Schema;
 
 const ticketSchema = new Schema({
-    event: {
-        type: Schema.Types.ObjectId,
-        ref: 'Event',
+    uuid: {
+        type: String,
         required: true
+    },
+    eventId: { 
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'Event', 
+        required: true 
+    },
+    userId: { 
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'User', 
+        required: true 
     },
     price: {
         type: Number,
         required: true
     },
-    seatNumber: {
-        type: String,
-        required: true
-    }
+    purchaseDate: { 
+        type: Date, 
+        default: Date.now
+    },
 });
 
+// Créer un modèle de ticket à partir du schéma
 const Ticket = mongoose.model('Ticket', ticketSchema);
 
 // Validation avec Joi
