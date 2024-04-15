@@ -1,7 +1,7 @@
 const express = require('express');
 const { PORT } = require('./config');
 const { databaseConnection } = require('./database');
-
+const expressApp = require('./express-app');
 
 const StartServer = async() => {
     
@@ -10,9 +10,7 @@ const StartServer = async() => {
     
     await databaseConnection();
     
-    app.use('/', (req, res) =>{
-    return res.status(200).json({"msg":"hello from ticket"})
-    });
+    await expressApp(app);
 
     app.listen(PORT, () => console.log(`Event is Listening on port ${PORT}...`));
 

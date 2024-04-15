@@ -24,7 +24,6 @@ const CustomerSchema = new Schema({
             name: { type: String },
             description: { type: String },
             banner: { type: String },
-            avalable: { type: Boolean },
             price: { type: Number },
         }
     ],
