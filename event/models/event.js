@@ -26,14 +26,14 @@ const eventSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
-    ticketsSold: {
-        type: Number,
-        default: 0
-    },
     location: {
         type: String,
         required: true
-    }
+    },
+    tickets: [{ 
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'Ticket' 
+    }]
 });
 
 const Event = mongoose.model('Event', eventSchema);
@@ -46,7 +46,6 @@ function validateEvent(event){
         address: Joi.string().required(),
         description: Joi.string().required(),
         maxTickets: Joi.number().required(),
-        ticketsSold: Joi.number(),
         location: Joi.string().required()
     });
 

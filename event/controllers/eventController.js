@@ -3,9 +3,8 @@ const Event = require('../models/event');
 // Créer un nouvel événement
 const createEvent = async (req, res) => {
     try {
-        const { title, description, date, location, maxTickets } = req.body;
-        const newEvent = new Event({ title, description, date, location, maxTickets });
-        await newEvent.save();
+        const event = new Event(req.body);
+        await event.save();
         res.status(201).json(newEvent);
     } catch (error) {
         console.error(error);
