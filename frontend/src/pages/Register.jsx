@@ -4,8 +4,7 @@ import { Link } from 'react-router-dom';
 
 const Register = () => {
   const [formData, setFormData] = useState({
-      firstName: '',
-      lastName: '',
+      phone: '',
       email: '',
       password: ''
   });
@@ -17,7 +16,7 @@ const Register = () => {
   const handleSubmit = async (e) => {
       e.preventDefault();
       try {
-          const response = await axios.post('http://localhost:4003/register', formData);
+          const response = await axios.post('http://localhost:4000/user/signup', formData);
           console.log(response.data);
           // Gérer la réponse de l'API (par exemple, rediriger l'utilisateur vers une autre page)
       } catch (error) {
@@ -49,12 +48,8 @@ const Register = () => {
                           <form onSubmit={handleSubmit}>
                               <div className="row gy-3 gy-md-4 overflow-hidden">
                                   <div className="col-12">
-                                      <label htmlFor="firstName" className="form-label">First Name <span className="text-danger">*</span></label>
-                                      <input type="text" className="form-control" name="firstName" id="firstName" placeholder="First Name" required onChange={handleChange} />
-                                  </div>
-                                  <div className="col-12">
-                                      <label htmlFor="lastName" className="form-label">Last Name <span className="text-danger">*</span></label>
-                                      <input type="text" className="form-control" name="lastName" id="lastName" placeholder="Last Name" required onChange={handleChange} />
+                                      <label htmlFor="phone" className="form-label"> Phone <span className="text-danger">*</span></label>
+                                      <input type="text" className="form-control" name="phone" id="phone" placeholder="phone" required onChange={handleChange} />
                                   </div>
                                   <div className="col-12">
                                       <label htmlFor="email" className="form-label">Email <span className="text-danger">*</span></label>
