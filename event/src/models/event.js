@@ -31,8 +31,9 @@ function validateEvent(event){
     const schema = Joi.object({
         title: Joi.string().required(),
         prix: Joi.string().required(),
-        adresse: Joi.string().required(),
+        address: Joi.string().required(),
         description: Joi.string().required(),
+        date: Joi.date().required()
     });
 
     return schema.validate(event);
